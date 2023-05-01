@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Link;
 
 class HomeController extends Controller
 {
@@ -40,13 +41,18 @@ class HomeController extends Controller
             parse_str($query_str, $query_params);
 
             if($query_params) {
+
+                Link::create([
+                    'url' => $url,
+                ]); 
+
                 $url_response = json_encode($query_params);
 
                 $inverted = [];
                 foreach($query_params as $key => $value) {
                     $inverted[] = [ strrev($key) => strrev($value)];
                 } 
-                
+
                 $url_response_inverted = json_encode(array_reverse($inverted));
 
             } else {
